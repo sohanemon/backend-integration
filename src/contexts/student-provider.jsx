@@ -19,7 +19,7 @@ const StudentsProvider = ({ children }) => {
       body: JSON.stringify({ name: name }),
     })
       .then((res) => res.json())
-      .then((data) => setStudents(data));
+      .then((data) => console.log(data));
   };
 
   return (

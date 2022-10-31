@@ -23,3 +23,57 @@ const postStudent = (name) => {
     .then((data) => setStudents(data));
 };
 ```
+
+# MongoDB
+
+- get the mongoDB_URI. It may looks like `mongodb+srv://sohanemon:<password>@<clusterName>.2gtvyou.mongodb.net/?retryWrites=true&w=majority`
+- then set as a client
+
+```js
+const { MongoClient } = require("mongodb");
+
+const client = new MongoClient(process.env.MONGODB_URI);
+```
+
+- retrieve the collection from database
+
+```js
+try {
+  const collection = client.db("<myDbName").collection("<myCollectionName>");
+  // myCollectionName collection is inside the myDbName database
+} finally {
+}
+```
+
+- operate different operations on collection variable now
+
+## Insert/Create
+
+```js
+const runMongo = async () => {
+  try {
+    const collection = client.db("users").collection("students");
+    const doc = {
+      name: "rafi",
+    };
+    collection.insertOne(doc);
+  } finally {
+  }
+};
+```
+
+> make sure to run `runMongo()`
+
+> as it is async then we can use `runMongo().catch(console.log)`
+
+- now send the fetched data from frontend to the server as
+
+```js
+try {
+    const collection = client.db("users").collection("students");
+    app.post("/register", async (req, res) => {
+      const doc = req.body;
+      const result = await collection.insertOne(doc);
+      res.send(result);
+    });
+```
