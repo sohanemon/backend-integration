@@ -26,7 +26,7 @@ const postStudent = (name) => {
 
 # MongoDB
 
-- get the mongoDB_URI. It may looks like `mongodb+srv://sohanemon:<password>@<clusterName>.2gtvyou.mongodb.net/?retryWrites=true&w=majority`
+- get the mongoDB_URI. It may looks like `mongodb+srv://sohanemon:<password>@<clusterName>.2gtvyou.mongodb.net/?retryWrites=true&w=majority` or `mongodb://localhost:8000/"`
 - then set as a client
 
 ```js
@@ -76,4 +76,23 @@ try {
       const result = await collection.insertOne(doc);
       res.send(result);
     });
+```
+
+## Get/Read
+
+- `find()` / `findOne` takes `query` and `options` as parameter
+
+```js
+try {
+    const collection = client.db("users").collection("students");
+
+    app.get("/students", async (req, res) => {
+      const cursor = collection.find({});
+      // await is not required here bcoz find returns a cursor not a promise
+      const result = await cursor.toArray();
+      // .toArray() returns a promise to await is required
+      res.json(result);
+    });
+
+  }...
 ```
