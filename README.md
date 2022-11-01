@@ -31,7 +31,7 @@ const postStudent = (name) => {
 
 ```js
 const { MongoClient } = require("mongodb");
-
+// step: 1
 const client = new MongoClient(process.env.MONGODB_URI);
 ```
 
@@ -39,6 +39,7 @@ const client = new MongoClient(process.env.MONGODB_URI);
 
 ```js
 try {
+  // step: 2
   const collection = client.db("<myDbName").collection("<myCollectionName>");
   // myCollectionName collection is inside the myDbName database
 } finally {
@@ -47,7 +48,7 @@ try {
 
 - operate different operations on collection variable now
 
-## Insert/Create
+## Insert/Create/Post
 
 ```js
 const runMongo = async () => {
@@ -56,6 +57,7 @@ const runMongo = async () => {
     const doc = {
       name: "rafi",
     };
+    // step: 3
     collection.insertOne(doc);
   } finally {
   }
@@ -73,6 +75,7 @@ try {
     const collection = client.db("users").collection("students");
     app.post("/register", async (req, res) => {
       const doc = req.body;
+      // step: 3
       const result = await collection.insertOne(doc);
       res.send(result);
     });
@@ -87,14 +90,45 @@ try {
     const collection = client.db("users").collection("students");
 
     app.get("/students", async (req, res) => {
+      // step: 3
       const cursor = collection.find({});
       // await is not required here bcoz find returns a cursor not a promise
+      // step: 4
       const result = await cursor.toArray();
       // .toArray() returns a promise to await is required
       res.json(result);
     });
 
   }...
+```
+
+- `findOne` doesn't return any cursor. So, `await` should be used with `findOne` function as it returns a promise
+- by hovering on any function, vs code shows what actually a function return like [this](./src/assets/Screenshot%20from%202022-11-01%2019-28-35.png). Anything after `:` or `=>` determines what actually returning there.
+
+```js
+app.get("/student/:_id", async (req, res) => {
+  const _id = req.params._id;
+  const result = await collection.findOne({ _id: ObjectId(_id) });
+  res.json(result);
+});
+```
+
+## Update/Put/Patch
+
+- Similar to other it also have `updateOne` and `updateMany` function
+
+```js
+app.put("/update/:_id", async (req, res) => {
+  const _id = req.params._id;
+  const doc = req.body;
+  const result = await collection.updateOne(
+    { _id: ObjectId(_id) },
+    {
+      $set: doc,
+    }
+  );
+  res.send(result);
+});
 ```
 
 ## Delete
@@ -105,6 +139,7 @@ try {
 ```js
 app.delete("/delete/:_id", async (req, res) => {
   const _id = req.params._id;
+  // step: 4
   const result = await collection.deleteOne({ _id: ObjectId(_id) });
   res.send(result);
 });

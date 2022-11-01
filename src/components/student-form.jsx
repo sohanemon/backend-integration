@@ -1,11 +1,20 @@
+import { useLocation, useParams } from "react-router-dom";
 import { useStudents } from "../contexts/student-provider";
 
 const StudentForm = () => {
-  const { postStudent } = useStudents();
+  const { postStudent, updateStudent } = useStudents();
+  const params = useParams();
+  console.log("🚀 > StudentForm > params", params);
+  const { pathname } = useLocation();
+  const isRegister = pathname.includes("register");
   const handleSubmit = (e) => {
     e.preventDefault();
     const name = e.target.name.value;
-    postStudent(name);
+    if (isRegister) {
+      postStudent(name);
+    } else {
+      updateStudent(params._id, name);
+    }
     e.target.reset();
   };
 
@@ -23,7 +32,7 @@ const StudentForm = () => {
         }}
       >
         <input placeholder='name' name='name' type={"name"} />
-        <button>Register</button>
+        <button>{isRegister ? "Register" : "Update"}</button>
       </form>
     </>
   );
