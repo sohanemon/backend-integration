@@ -12,7 +12,7 @@ app.use(express.json());
 
 ```js
 const postStudent = (name) => {
-  fetch("http://localhost:5000/register", {
+  fetch("https://backend-integration-test.vercel.app/register", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
