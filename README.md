@@ -1,4 +1,12 @@
-## Posted data is undefined
+## Server/Backend deploy config
+```js
+{ // vercel.json
+  "builds": [{ "src": "index.js", "use": "@vercel/node" }],
+  "routes": [{ "src": "/(.*)", "dest": "/index.js" }]
+}
+```
+
+## Posted data is undefined?
 
 - add
 
