@@ -1,8 +1,6 @@
-import { useState } from "react";
 import { useStudents } from "../contexts/student-provider";
 
 const StudentForm = () => {
-  const [name, setName] = useState("");
   const { postStudent } = useStudents();
   const handleSubmit = (e) => {
     e.preventDefault();

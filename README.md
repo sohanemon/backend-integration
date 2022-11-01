@@ -96,3 +96,16 @@ try {
 
   }...
 ```
+
+## Delete
+
+- `deleteOne` function takes a query argument. Which describes about the items.
+- for deleting an item using \_id one should pass using `ObjectId` function.
+
+```js
+app.delete("/delete/:_id", async (req, res) => {
+  const _id = req.params._id;
+  const result = await collection.deleteOne({ _id: ObjectId(_id) });
+  res.send(result);
+});
+```

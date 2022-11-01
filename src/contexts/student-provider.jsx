@@ -19,11 +19,24 @@ const StudentsProvider = ({ children }) => {
       body: JSON.stringify({ name: name }),
     })
       .then((res) => res.json())
+      .then((data) => setStudents((p) => [...p, data]));
+  };
+  const deleteStudent = (_id) => {
+    fetch(`http://localhost:5000/delete/${_id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ _id }),
+    })
+      .then((res) => res.json())
       .then((data) => console.log(data));
   };
 
   return (
-    <Students.Provider value={{ students, setStudents, postStudent }}>
+    <Students.Provider
+      value={{ students, setStudents, postStudent, deleteStudent }}
+    >
       {children}
     </Students.Provider>
   );
