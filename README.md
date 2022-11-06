@@ -7,7 +7,11 @@
 ```
 ## Query vs Params
 Best practice for RESTful API design is that path params are used to identify a specific resource or resources, while query parameters are used to sort/filter those resources.
-
+```js
+http://localhost:5000/orders/?email=mr.es20x@gmail.com
+// are same
+http://localhost:5000/orders?email=mr.es20x@gmail.com
+```
 ## Posted data is undefined?
 
 - add
