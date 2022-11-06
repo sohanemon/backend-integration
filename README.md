@@ -5,6 +5,8 @@
   "routes": [{ "src": "/(.*)", "dest": "/index.js" }]
 }
 ```
+## Query vs Params
+Best practice for RESTful API design is that path params are used to identify a specific resource or resources, while query parameters are used to sort/filter those resources.
 
 ## Posted data is undefined?
 
